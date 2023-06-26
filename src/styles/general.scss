@@ -1,12 +1,15 @@
 @import './partials/mixins';
 @import './partials/variables';
 
+//Importing google font
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
 
 // Resetting of the browser default styles
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
 }
 
 .flex {
@@ -24,4 +27,16 @@ ul {
 a {
     text-decoration: none;
     color: black;
+}
+
+.color-coral {
+    color: $fontColorCoral;
+}
+
+.color-blue-water {
+    color: $fontColorBlueWater;
+}
+
+.color-white{
+    color: white;
 }
