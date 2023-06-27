@@ -31,7 +31,7 @@
                         </li>
                     </ul>
 
-                    <div class="ml-auto">
+                    <div class="ml-auto button-container">
                         <button class="btn btn-outline-light sign-in-button" type="submit">Sign in</button>
                     </div>
 
