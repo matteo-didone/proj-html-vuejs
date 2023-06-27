@@ -38,20 +38,22 @@
                 </div>
             </div>
         </nav>
-
         
+        <AppHero />
+
     </header>
 </template>
 
 
 <script>
 import { store } from '../store.js'
+import AppHero from './AppHero.vue'
 
 export default {
     name: 'AppHeader',
 
     components: {
-
+        AppHero
     },
 
     data() {
