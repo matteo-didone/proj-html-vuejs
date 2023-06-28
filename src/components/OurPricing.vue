@@ -103,7 +103,7 @@ export default {
 
 <style lang="scss" scoped>
 .pricing {
-    background: linear-gradient(to left, #040737, #080d56);
+    background: linear-gradient(to left, #040737, #020331);
 }
 
 .section-title {
