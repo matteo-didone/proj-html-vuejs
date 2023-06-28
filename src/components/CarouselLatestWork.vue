@@ -1,6 +1,5 @@
 <template>
     <div class="top-section">
-
         <!-- Title Container -->
         <div class="title-container">
             <p>Portfolio</p>
@@ -10,26 +9,25 @@
         <!-- Carousel Controls -->
         <div class="carousel-controls">
             <div class="carousel-control-btn-container">
-                <button class="carousel-controls-btn" @click="getPrevious">
+                <button class="carousel-controls-btn" @click="previousSlide">
                     <i class="fa-thin fa-arrow-left"></i>
                 </button>
             </div>
 
             <div class="carousel-control-btn-container">
-                <button class="carousel-controls-btn" @click="getNext">
+                <button class="carousel-controls-btn" @click="nextSlide">
                     <i class="fa-thin fa-arrow-right"></i>
                 </button>
             </div>
         </div>
-
     </div>
 
     <!-- Carousel / Slider -->
-    <div class="slide-container swiper">
+    <div class="slide-container">
         <div class="slide-content">
-            <div class="card-wrapper swiper-wrapper">
+            <div class="card-wrapper">
                 <!-- Card -->
-                <div v-for="item in carouselItems" :key="item.id" class="card swiper-slide">
+                <div v-for="item in carouselItems" :key="item.id" class="card">
                     <div class="image-content">
                         <span class="overlay"></span>
                         <div class="card-image">
@@ -37,8 +35,8 @@
                         </div>
                     </div>
                     <div class="card-content">
-                        <h2>{{ item.title }}</h2>
-                        <p class="description">{{ item.category }}</p>
+                        <h2 class="card-title">{{ item.title }}</h2>
+                        <p class="card-description">{{ item.category }}</p>
                     </div>
                 </div>
             </div>
@@ -46,14 +44,15 @@
     </div>
 
     <!-- Pagination dots -->
-    <div class="dots"></div>
+    <div class="dots">
+        <i v-for="(item, index) in carouselItems" :key="index"
+            :class="{ 'fa-solid fa-circle': true, 'selected': activeIndex === index }"></i>
+    </div>
 </template>
-  
+
 <script>
 import { store } from '../store.js';
-import { register } from 'swiper/element/bundle';
 
-register();
 
 export default {
     name: 'CarouselLatestWork',
@@ -108,37 +107,13 @@ export default {
         };
     },
 
-    mounted() {
-        const carouselElement = document.querySelector('#app');
-
-        this.startAutoplay();
-
-        carouselElement.addEventListener('mouseenter', this.pauseAutoplay);
-        carouselElement.addEventListener('mouseleave', this.resumeAutoplay);
-    },
-
-    beforeUnmount() {
-        const carouselElement = document.querySelector('#app');
-
-        carouselElement.removeEventListener('mouseenter', this.pauseAutoplay);
-        carouselElement.removeEventListener('mouseleave', this.resumeAutoplay);
-    },
-
     methods: {
-        getPrevious() {
-            if (this.activeIndex === 0) {
-                this.activeIndex = this.carouselItems.length - 1;
-            } else {
-                this.activeIndex--;
-            }
-        },
 
-        getNext() {
-            if (this.activeIndex === this.carouselItems.length - 1) {
-                this.activeIndex = 0;
-            } else {
-                this.activeIndex++;
-            }
+        previousSlide() {
+            this.activeIndex = (this.activeIndex - 1 + this.carouselItems.length) % this.carouselItems.length;
+        },
+        nextSlide() {
+            this.activeIndex = (this.activeIndex + 1) % this.carouselItems.length;
         },
 
         isActive(index) {
@@ -157,7 +132,6 @@ export default {
 .slide-container {
     height: 600px;
     width: 100%;
-    max-width: 1120px;
     background-color: white;
     border: none;
 }
@@ -205,7 +179,7 @@ export default {
             background-color: transparent;
         }
 
-        .carousel-control-btn-container:first-child{
+        .carousel-control-btn-container:first-child {
             margin-right: 30px;
         }
 
@@ -231,35 +205,79 @@ export default {
 
 .card-wrapper {
     border: none;
-}
-
-.card {
-    border: none;
-}
-
-.image-content,
-.card-content {
+    width: 100%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
-    padding: 10px 14px;
-    border: 0px solid none;
+    margin-top: 50px;
+
+    overflow-x: scroll;
+
+    .card {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        margin-left: 550px;
+        background-color: white;
+        border: none;
+        
+        .card-image {
+            position: relative;
+            width: 500px;
+            height: 350px;
+            border-radius: 10%;
+            background: #fff;
+            padding: 3px;
+        }
+
+        .card-image .card-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 8%;
+            object-fit: cover;
+        }
+
+        .card-content {
+            width: 500px;
+            height: 150px;
+
+
+            display: flex;
+            justify-content: space-between;
+
+            .card-title {
+                font-size: 16px;
+                font-weight: bold;
+                margin: 0;
+            }
+
+            .card-description {
+                color: #989898;
+                margin: 0;
+            }
+        }
+
+    }
 }
 
-.card-image {
-    position: relative;
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    background: #fff;
-    padding: 3px;
-}
+.dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 200px;
 
-.card-image .card-img {
-    width: 100%;
-    height: 100%;
-    border-radius: 20%;
-    object-fit: cover;
+    i {
+        color: grey;
+        font-size: 12px;
+        margin: 0 5px;
+        cursor: pointer;
+    }
+
+    i.selected {
+        color: #fa858b;
+    }
 }
 </style>
